@@ -37,6 +37,7 @@ async function onFormSubmit(event) {
         event.preventDefault();
     imagesList.innerHTML = '';
     page = 1;
+    hideLoadMore();
 
     keyWord = event.target.elements.search.value.trim();
     showLoader();
@@ -62,7 +63,8 @@ async function onFormSubmit(event) {
         showLoadMore();
        showEmptySearchResult(images);
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        catchError();
         };
      
     event.target.reset();
@@ -134,6 +136,11 @@ function hideLoadMore() {
     loadButton.classList.add('is-hidden')
 }
 
-
-
+function catchError(){
+    iziToast.error({
+    title: '',
+            message: 'Sorry, maybe there are some issues with network connection!',
+    position: 'topRight',
+});
+}
 
