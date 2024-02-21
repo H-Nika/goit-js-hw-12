@@ -60,7 +60,7 @@ async function onFormSubmit(event) {
     
     gallery.refresh();
         hideLoader();
-        showLoadMore();
+        checkTheOnlyPage();
        showEmptySearchResult(images);
     } catch (error) {
         console.log(error);
@@ -93,14 +93,18 @@ async function onLoadMoreButton(event) {
     hideLoadMore();
     showLoader();
     page += 1;
-        const images = await fetchImages(keyWord, page);
-            renderImages(images);
+    const images = await fetchImages(keyWord, page);
+    renderImages(images);
              
     gallery.refresh();
     hideLoader();
-        showLoadMore();
+    showLoadMore();
     checkGalleryEnd();
 
+    scroll();
+}
+
+function scroll() {
      const height =
     imagesList.firstElementChild.getBoundingClientRect().height;
 
@@ -110,6 +114,11 @@ async function onLoadMoreButton(event) {
   });
 }
 
+function checkTheOnlyPage() {
+    if (page != maxPage) {
+        showLoadMore();
+    }
+}
 
 function checkGalleryEnd() {
     if (page >= maxPage) {
